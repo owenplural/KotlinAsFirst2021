@@ -2,7 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -72,7 +72,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int = when {
+    n / 10 == 0 -> 1
+    else -> digitNumber(n / 10) + 1
+}
 
 /**
  * Простая (2 балла)
@@ -120,7 +123,13 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int  {
+    var k = 1
+    while (k > 0) {
+        if ((k % n == 0) && (k % m == 0)) break else k += 1
+    }
+    return k
+}
 
 /**
  * Средняя (3 балла)
@@ -193,8 +202,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
-
-/**
+    /**
  * Сложная (5 баллов)
  *
  * Найти n-ю цифру последовательности из чисел Фибоначчи (см. функцию fib выше):
