@@ -138,7 +138,17 @@ fun lcm(m: Int, n: Int): Int  {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var n1 = m
+    var n2 = n
+    while (n1 != 0 && n2 != 0) {
+        if (n1 > n2)
+        n1 %= n2
+    else
+        n2 %= n1
+}
+return n1 + n2 == 1
+}
 
 /**
  * Средняя (3 балла)
