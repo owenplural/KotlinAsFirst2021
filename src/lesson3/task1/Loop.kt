@@ -123,12 +123,14 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int  {
-    var k = 1
-    while (k > 0) {
-        if ((k % n == 0) && (k % m == 0)) break else k += 1
-    }
-    return k
+fun lcm(m: Int, n: Int): Int {
+    var numOne = m
+    var numTwo = n
+    while (numOne != numTwo)
+        if (numOne > numTwo)
+            numOne -= numTwo
+        else numTwo -= numOne
+    return m * n / numOne
 }
 
 /**
@@ -143,11 +145,11 @@ fun isCoPrime(m: Int, n: Int): Boolean {
     var n2 = n
     while (n1 != 0 && n2 != 0) {
         if (n1 > n2)
-        n1 %= n2
-    else
-        n2 %= n1
-}
-return n1 + n2 == 1
+            n1 %= n2
+        else
+            n2 %= n1
+    }
+    return n1 + n2 == 1
 }
 
 /**
@@ -212,7 +214,8 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
-    /**
+
+/**
  * Сложная (5 баллов)
  *
  * Найти n-ю цифру последовательности из чисел Фибоначчи (см. функцию fib выше):
