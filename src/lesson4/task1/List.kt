@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import javax.naming.NameNotFoundException
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -120,14 +121,27 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var vAbs = 0.0
+    for (i in 0 until v.size) {
+        vAbs += v[i] * v[i]
+    }
+    return sqrt(vAbs)
+}
+
 
 /**
  * Простая (2 балла)
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    val listAvg = list.sum() / list.size
+    if (list.isEmpty())
+        return 0.0
+    else
+        return listAvg
+}
 
 /**
  * Средняя (3 балла)
@@ -241,7 +255,52 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val FirstDigit: String = when (n % 10){
+        1 -> "I"
+        2 -> "II"
+        3 -> "III"
+        4 -> "IV"
+        5 -> "V"
+        6 -> "VI"
+        7 -> "VII"
+        8 -> "VIII"
+        9 -> "IX"
+        else -> ""
+    }
+    val SecondDigit: String = when ((n / 10) % 10){
+        1 -> "X"
+        2 -> "XX"
+        3 -> "XXX"
+        4 -> "XL"
+        5 -> "L"
+        6 -> "LX"
+        7 -> "LXX"
+        8 -> "LXXX"
+        9 -> "XC"
+        else -> ""
+    }
+    val ThirdDigit: String = when ((n / 100) % 10){
+        1 -> "C"
+        2 -> "CC"
+        3 -> "CCC"
+        4 -> "CD"
+        5 -> "D"
+        6 -> "DC"
+        7 -> "DCC"
+        8 -> "DCCC"
+        9 -> "CM"
+        else -> ""
+    }
+    val FourthDigit: String = when ((n / 1000) % 10){
+        1 -> "M"
+        2 -> "MM"
+        3 -> "MMM"
+        4 -> "MMMM"
+        else -> ""
+    }
+    return FourthDigit + ThirdDigit + SecondDigit + FirstDigit
+}
 
 /**
  * Очень сложная (7 баллов)
