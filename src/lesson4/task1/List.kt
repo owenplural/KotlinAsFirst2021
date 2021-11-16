@@ -256,50 +256,17 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    val FirstDigit: String = when (n % 10){
-        1 -> "I"
-        2 -> "II"
-        3 -> "III"
-        4 -> "IV"
-        5 -> "V"
-        6 -> "VI"
-        7 -> "VII"
-        8 -> "VIII"
-        9 -> "IX"
-        else -> ""
+    var k = n
+    val romanNum = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val arabianNum = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    var result = ""
+    for (i in arabianNum.size - 1 downTo 0) {
+        while (k >= arabianNum[i]) {
+            k -= arabianNum[i]
+            result += romanNum[i]
+        }
     }
-    val SecondDigit: String = when ((n / 10) % 10){
-        1 -> "X"
-        2 -> "XX"
-        3 -> "XXX"
-        4 -> "XL"
-        5 -> "L"
-        6 -> "LX"
-        7 -> "LXX"
-        8 -> "LXXX"
-        9 -> "XC"
-        else -> ""
-    }
-    val ThirdDigit: String = when ((n / 100) % 10){
-        1 -> "C"
-        2 -> "CC"
-        3 -> "CCC"
-        4 -> "CD"
-        5 -> "D"
-        6 -> "DC"
-        7 -> "DCC"
-        8 -> "DCCC"
-        9 -> "CM"
-        else -> ""
-    }
-    val FourthDigit: String = when ((n / 1000) % 10){
-        1 -> "M"
-        2 -> "MM"
-        3 -> "MMM"
-        4 -> "MMMM"
-        else -> ""
-    }
-    return FourthDigit + ThirdDigit + SecondDigit + FirstDigit
+    return result
 }
 
 /**
