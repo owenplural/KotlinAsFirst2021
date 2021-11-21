@@ -263,7 +263,9 @@ fun roman(n: Int): String {
     for (i in arabianNum.size - 1 downTo 0) {
         while (k >= arabianNum[i]) {
             k -= arabianNum[i]
-            result += romanNum[i]
+            result += buildString {
+                append(romanNum[i])
+            }
         }
     }
     return result
