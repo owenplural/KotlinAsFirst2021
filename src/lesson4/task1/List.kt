@@ -355,7 +355,7 @@ fun russian(n: Int): String {
         10 -> result += " десять"
         else -> {
             when ((n / 10) % 10) {
-                9 -> result += " девяности"
+                9 -> result += " девяносто"
                 8 -> result += " восемьдесят"
                 7 -> result += " семьдесят"
                 6 -> result += " шестьдесят"
