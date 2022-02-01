@@ -74,7 +74,16 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): Int {
+    val parts = str.split(":")
+    var result = 0
+    for (part in parts) {
+        val number = part.toInt()
+        result = result * 60 + number
+    }
+    return result
+}
+
 
 /**
  * Средняя (4 балла)
@@ -127,7 +136,16 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!jumps.matches((Regex("""(\d+\s[ +%-]+)+"""))))
+        return -1
+    val h = jumps.split(" ")
+    var result = -1
+    for (i in h.indices step 2)
+        if ((h[i].toInt() > result) && "+" in h[i + 1])
+            result = h[i].toInt()
+    return result
+}
 
 /**
  * Сложная (6 баллов)
@@ -138,7 +156,23 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+
+    if (!expression.matches(Regex("""\d+( [+-] \d+)*"""))) throw IllegalArgumentException()
+    val splitter = expression.split(" ")
+    var result = splitter[0].toInt()
+    for (i in 1 until splitter.size step 2) {
+        if (i + 1 < splitter.size) {
+            val num = splitter[i + 1]
+            when (splitter[i]) {
+                "-" -> result -= num.toInt()
+                "+" -> result += num.toInt()
+            }
+        }
+    }
+    return result
+}
+
 
 /**
  * Сложная (6 баллов)
