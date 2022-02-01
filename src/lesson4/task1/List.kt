@@ -259,15 +259,16 @@ fun roman(n: Int): String {
     var k = n
     val romanNum = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
     val arabianNum = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
-    val result = StringBuilder()
-    for (i in arabianNum.size - 1 downTo 0) {
-        while (k >= arabianNum[i]) {
-            k -= arabianNum[i]
-            result.append(romanNum[i])
+    return buildString {
+        for (i in arabianNum.size - 1 downTo 0) {
+            while (k >= arabianNum[i]) {
+                k -= arabianNum[i]
+                append(romanNum[i])
+            }
         }
     }
-    return result.toString()
 }
+
 
 /**
  * Очень сложная (7 баллов)
