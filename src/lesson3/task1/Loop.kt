@@ -2,7 +2,9 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.*
+import kotlin.math.sqrt
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -101,14 +103,24 @@ fun fib(n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (i in 2..(n / 2))
+        if (n % i == 0)
+            return i
+    return n
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    for (i in (n / 2) downTo 1)
+        if (n % i == 0)
+            return i
+    return n
+}
 
 /**
  * Простая (2 балла)
@@ -126,7 +138,19 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var count = 0
+    var y = x
+    while (y != 1)
+        if (y % 2 == 0) {
+            y /= 2
+            count++
+        } else {
+            y = 3 * y + 1
+            count++
+        }
+    return count
+}
 
 /**
  * Средняя (3 балла)
@@ -191,7 +215,29 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var x = n
+    var has = true
+    var checkF = 0
+    var checkS = 0
+    if (x == 0) return false
+    else {
+        while (x > 0) {
+            checkF = x % 10
+            x /= 10
+            checkS = x % 10
+            if (checkF != checkS && x != 0) {
+                return true
+                break
+            } else {
+                has = false
+            }
+        }
+    }
+    return has
+}
+
+
 
 /**
  * Средняя (4 балла)
