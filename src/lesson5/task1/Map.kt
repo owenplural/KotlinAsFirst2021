@@ -115,6 +115,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
     }
     return true
 }
+
 /**
  * Простая (2 балла)
  *
@@ -129,8 +130,13 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    TODO()
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Map<String, String> {
+
+    for ((key) in b) {
+        if (a[key] == b[key])
+            a.remove(key)
+    }
+    return a
 }
 
 /**
@@ -188,7 +194,21 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var result = ""
+    var minPrice = Double.MAX_VALUE
+    for ((key, value) in stuff) {
+        if (value.first == kind) {
+            if (value.second < minPrice) {
+                minPrice = value.second
+                result = key
+            }
+        } else {
+            return null
+        }
+    }
+    return result
+}
 
 /**
  * Средняя (3 балла)
@@ -199,7 +219,14 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    val listOfWords = word.lowercase().toList()
+    val x: List<Char> = chars
+    for (i in listOfWords.indices) {
+        if (!x.contains(listOfWords[i])) return false
+    }
+    return true
+}
 
 /**
  * Средняя (4 балла)
