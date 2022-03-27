@@ -2,6 +2,7 @@
 
 package lesson7.task1
 
+import lesson5.task1.extractRepeats
 import java.io.File
 
 // Урок 7: работа с файлами
@@ -161,7 +162,42 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+
+    val reader = File(inputName).readLines()
+    val writer = File(outputName).bufferedWriter()
+
+    val listOfCorrectedLines = mutableListOf<String>()
+    var maxLengthLine = 0
+
+    for (line in reader) {
+        var spaceCleaner = line.trim()
+        while (spaceCleaner.contains("  "))
+            spaceCleaner = spaceCleaner.replace("  ", " ")
+        if (spaceCleaner.length > maxLengthLine) maxLengthLine = spaceCleaner.length
+        listOfCorrectedLines.add(spaceCleaner)
+    }
+
+    for (line in listOfCorrectedLines) {
+        val listOfPhrases = line.split(" ").toMutableList()
+        if (listOfPhrases.size == 1) {
+            writer.write(listOfPhrases[0])
+            writer.newLine()
+        } else {
+            var x = 0
+            var extraSpace = maxLengthLine - line.length
+            while (extraSpace > 0) {
+                listOfPhrases[x] += " "
+                if (x < listOfPhrases.size - 2)
+                    x++
+                else
+                    x = 0
+                extraSpace--
+            }
+            writer.write(listOfPhrases.joinToString(separator = " "))
+            writer.newLine()
+        }
+    }
+    writer.close()
 }
 
 /**
@@ -190,7 +226,6 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Средняя (14 баллов)
  *
  * Реализовать транслитерацию текста из входного файла в выходной файл посредством динамически задаваемых правил.
-
  * Во входном файле с именем inputName содержится некоторый текст (в том числе, и на русском языке).
  *
  * В ассоциативном массиве dictionary содержится словарь, в котором некоторым символам
@@ -243,7 +278,6 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Остроумный
  * БелогЛазый
  * ФиолетОвый
-
  * Соответствующий выходной файл:
  * Карминовый, Некрасивый
  *
@@ -280,20 +314,19 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
  * Пример входного файла:
 Lorem ipsum *dolor sit amet*, consectetur **adipiscing** elit.
 Vestibulum lobortis, ~~Est vehicula rutrum *suscipit*~~, ipsum ~~lib~~ero *placerat **tortor***,
-
 Suspendisse ~~et elit in enim tempus iaculis~~.
  *
  * Соответствующий выходной файл:
 <html>
-    <body>
-        <p>
-            Lorem ipsum <i>dolor sit amet</i>, consectetur <b>adipiscing</b> elit.
-            Vestibulum lobortis. <s>Est vehicula rutrum <i>suscipit</i></s>, ipsum <s>lib</s>ero <i>placerat <b>tortor</b></i>.
-        </p>
-        <p>
-            Suspendisse <s>et elit in enim tempus iaculis</s>.
-        </p>
-    </body>
+<body>
+<p>
+Lorem ipsum <i>dolor sit amet</i>, consectetur <b>adipiscing</b> elit.
+Vestibulum lobortis. <s>Est vehicula rutrum <i>suscipit</i></s>, ipsum <s>lib</s>ero <i>placerat <b>tortor</b></i>.
+</p>
+<p>
+Suspendisse <s>et elit in enim tempus iaculis</s>.
+</p>
+</body>
 </html>
  *
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
@@ -336,65 +369,65 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
  *
  * Пример входного файла:
 ///////////////////////////////начало файла/////////////////////////////////////////////////////////////////////////////
-* Утка по-пекински
-    * Утка
-    * Соус
-* Салат Оливье
-    1. Мясо
-        * Или колбаса
-    2. Майонез
-    3. Картофель
-    4. Что-то там ещё
-* Помидоры
-* Фрукты
-    1. Бананы
-    23. Яблоки
-        1. Красные
-        2. Зелёные
+ * Утка по-пекински
+ * Утка
+ * Соус
+ * Салат Оливье
+1. Мясо
+ * Или колбаса
+2. Майонез
+3. Картофель
+4. Что-то там ещё
+ * Помидоры
+ * Фрукты
+1. Бананы
+23. Яблоки
+1. Красные
+2. Зелёные
 ///////////////////////////////конец файла//////////////////////////////////////////////////////////////////////////////
  *
  *
  * Соответствующий выходной файл:
 ///////////////////////////////начало файла/////////////////////////////////////////////////////////////////////////////
 <html>
-  <body>
-    <p>
-      <ul>
-        <li>
-          Утка по-пекински
-          <ul>
-            <li>Утка</li>
-            <li>Соус</li>
-          </ul>
-        </li>
-        <li>
-          Салат Оливье
-          <ol>
-            <li>Мясо
-              <ul>
-                <li>Или колбаса</li>
-              </ul>
-            </li>
-            <li>Майонез</li>
-            <li>Картофель</li>
-            <li>Что-то там ещё</li>
-          </ol>
-        </li>
-        <li>Помидоры</li>
-        <li>Фрукты
-          <ol>
-            <li>Бананы</li>
-            <li>Яблоки
-              <ol>
-                <li>Красные</li>
-                <li>Зелёные</li>
-              </ol>
-            </li>
-          </ol>
-        </li>
-      </ul>
-    </p>
-  </body>
+<body>
+<p>
+<ul>
+<li>
+Утка по-пекински
+<ul>
+<li>Утка</li>
+<li>Соус</li>
+</ul>
+</li>
+<li>
+Салат Оливье
+<ol>
+<li>Мясо
+<ul>
+<li>Или колбаса</li>
+</ul>
+</li>
+<li>Майонез</li>
+<li>Картофель</li>
+<li>Что-то там ещё</li>
+</ol>
+</li>
+<li>Помидоры</li>
+<li>Фрукты
+<ol>
+<li>Бананы</li>
+<li>Яблоки
+<ol>
+<li>Красные</li>
+<li>Зелёные</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</p>
+</body>
 </html>
 ///////////////////////////////конец файла//////////////////////////////////////////////////////////////////////////////
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
@@ -421,23 +454,23 @@ fun markdownToHtml(inputName: String, outputName: String) {
  * Вывести в выходной файл процесс умножения столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 111):
-   19935
-*    111
+19935
+ *    111
 --------
-   19935
+19935
 + 19935
 +19935
 --------
- 2212785
+2212785
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  * Нули в множителе обрабатывать так же, как и остальные цифры:
-  235
-*  10
+235
+ *  10
 -----
-    0
+0
 +235
 -----
- 2350
+2350
  *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
@@ -451,21 +484,19 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  * Вывести в выходной файл процесс деления столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 22):
-  19935 | 22
- -198     906
- ----
-    13
-    -0
-    --
-    135
-   -132
-   ----
-      3
-
+19935 | 22
+-198     906
+----
+13
+-0
+--
+135
+-132
+----
+3
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
-
