@@ -176,28 +176,28 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         if (spaceCleaner.length > maxLengthLine) maxLengthLine = spaceCleaner.length
         listOfCorrectedLines.add(spaceCleaner)
     }
-
-    for (line in listOfCorrectedLines) {
-        val listOfPhrases = line.split(" ").toMutableList()
-        if (listOfPhrases.size == 1) {
-            writer.write(listOfPhrases[0])
-            writer.newLine()
-        } else {
-            var x = 0
-            var extraSpace = maxLengthLine - line.length
-            while (extraSpace > 0) {
-                listOfPhrases[x] += " "
-                if (x < listOfPhrases.size - 2)
-                    x++
-                else
-                    x = 0
-                extraSpace--
+    writer.use {
+        for (line in listOfCorrectedLines) {
+            val listOfPhrases = line.split(" ").toMutableList()
+            if (listOfPhrases.size == 1) {
+                writer.write(listOfPhrases[0])
+                writer.newLine()
+            } else {
+                var x = 0
+                var extraSpace = maxLengthLine - line.length
+                while (extraSpace > 0) {
+                    listOfPhrases[x] += " "
+                    if (x < listOfPhrases.size - 2)
+                        x++
+                    else
+                        x = 0
+                    extraSpace--
+                }
+                writer.write(listOfPhrases.joinToString(separator = " "))
+                writer.newLine()
             }
-            writer.write(listOfPhrases.joinToString(separator = " "))
-            writer.newLine()
         }
     }
-    writer.close()
 }
 
 /**
